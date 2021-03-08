@@ -35,10 +35,11 @@ export class HttpService {
     return headerParams;
   }
 
-  get(url: string, data: any, skipAuth?: boolean): any {
+  get(url: string, params = {}, skipAuth?: boolean): any {
     const headers = new HttpHeaders(this.createAuthorizationHeader(skipAuth));
-    return this.http.post(url, data, {
-      headers
+    return this.http.get(url, {
+      headers,
+      params: params
     }).pipe(
       catchError(
         res => {
