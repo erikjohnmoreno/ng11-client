@@ -22,16 +22,20 @@ export class HttpService {
 
   authHeader(): any {
     return {
-      'Content-Type': 'application/json',
       'Authorization': `Auth: ${this.storage.get('accessToken')}`
     }
   }
 
-  createAuthorizationHeader(skipAuth?: boolean): any {
+  createAuthorizationHeader(skipAuth?: boolean, isFormData?: boolean): any {
     let headerParams = {};
-    if (!skipAuth) {
+
+    if (isFormData) {
       headerParams = this.authHeader();
+    } else if (!skipAuth) {
+      headerParams = this.authHeader();
+      headerParams['Content-Type'] = 'application/json';
     }
+
     return headerParams;
   }
 
